@@ -84,9 +84,9 @@ const ImageUploader = ({ onImagesSelected, isProcessing }: ImageUploaderProps) =
       
       <div className="flex flex-col items-center justify-center py-4 text-center">
         <Upload className="h-10 w-10 text-primary mb-2" />
-        <h3 className="text-lg font-semibold">Drop your images here</h3>
+        <h3 className="text-lg font-semibold">Kéo hình ảnh vào đây</h3>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          or click to browse
+          hoặc nhấp để chọn tệp
         </p>
         <Button 
           variant="outline" 
@@ -94,7 +94,7 @@ const ImageUploader = ({ onImagesSelected, isProcessing }: ImageUploaderProps) =
           disabled={isProcessing}
           className="mt-2"
         >
-          Select Images
+          Chọn hình ảnh
         </Button>
       </div>
       
@@ -105,7 +105,7 @@ const ImageUploader = ({ onImagesSelected, isProcessing }: ImageUploaderProps) =
           <div className="bg-background p-4 rounded-md shadow-lg">
             <h3 className="text-lg font-semibold flex items-center">
               <Upload className="h-5 w-5 mr-2" />
-              Drop to upload
+              Thả để tải lên
             </h3>
           </div>
         </div>

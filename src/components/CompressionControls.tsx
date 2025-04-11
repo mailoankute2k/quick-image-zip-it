@@ -38,8 +38,8 @@ const CompressionControls = ({
   const handleCompress = () => {
     if (!hasImages) {
       toast({
-        title: "No images selected",
-        description: "Please upload at least one image first.",
+        title: "Không có hình ảnh nào",
+        description: "Vui lòng tải lên ít nhất một hình ảnh trước.",
         variant: "destructive",
       });
       return;
@@ -51,7 +51,7 @@ const CompressionControls = ({
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium">Compression Ratio</label>
+          <label className="text-sm font-medium">Tỉ lệ nén</label>
           <span className="text-sm font-medium">{quality}%</span>
         </div>
         <Slider
@@ -64,18 +64,18 @@ const CompressionControls = ({
           disabled={isProcessing}
         />
         <p className="text-xs text-muted-foreground">
-          Higher values preserve more quality but result in larger file sizes
+          Giá trị cao hơn giữ lại nhiều chất lượng nhưng kích thước tệp sẽ lớn hơn
         </p>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button
           onClick={handleCompress}
-          disabled={!hasImages || isProcessing || isComplete}
+          disabled={!hasImages || isProcessing}
           className="flex-1"
         >
           <Play className="mr-2 h-4 w-4" />
-          Start Compression
+          Bắt đầu nén
         </Button>
         
         <Button
@@ -85,7 +85,7 @@ const CompressionControls = ({
           className="flex-1"
         >
           <Download className="mr-2 h-4 w-4" />
-          Download ZIP
+          Tải xuống ZIP
         </Button>
 
         <Button
@@ -95,7 +95,7 @@ const CompressionControls = ({
           className="flex-1"
         >
           <Trash2 className="mr-2 h-4 w-4" />
-          Clear All
+          Xóa tất cả
         </Button>
       </div>
     </div>

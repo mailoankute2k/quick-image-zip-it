@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import ImageUploader from "@/components/ImageUploader";
@@ -29,7 +28,6 @@ const Index = () => {
         setElapsedTime(elapsed);
         
         if (progress > 0) {
-          // Estimate remaining time based on elapsed time and progress
           const estimatedTotalTime = elapsed / (progress / 100);
           const remainingSeconds = estimatedTotalTime - elapsed;
           setRemainingTime(remainingSeconds > 0 ? remainingSeconds : 0);
@@ -44,10 +42,10 @@ const Index = () => {
   
   const handleImagesSelected = (files: File[]) => {
     setOriginalFiles((prevFiles) => [...prevFiles, ...files]);
-    setCanCompress(true); // Ensure we can compress when new images are added
+    setCanCompress(true);
     toast({
-      title: "Images added",
-      description: `${files.length} image${files.length > 1 ? 's' : ''} added successfully.`,
+      title: "Đã thêm hình ảnh",
+      description: `${files.length} hình ảnh đã được thêm thành công.`,
     });
   };
   
@@ -67,7 +65,6 @@ const Index = () => {
         const currentImageIndex = i;
         
         const result = await compressImage(file, quality, (imageProgress) => {
-          // Calculate overall progress
           const overallProgress = ((currentImageIndex / totalImages) * 100) + (imageProgress / totalImages);
           setProgress(overallProgress);
         });
@@ -77,17 +74,17 @@ const Index = () => {
       }
       
       setCompressedImages(compressedResults);
-      setCanCompress(false); // Set to false after completion
+      setCanCompress(false);
       
       toast({
-        title: "Compression complete",
-        description: `Successfully compressed ${totalImages} image${totalImages > 1 ? 's' : ''}.`,
+        title: "Nén hoàn tất",
+        description: `Đã nén thành công ${totalImages} hình ảnh.`,
       });
     } catch (error) {
       console.error("Error during compression:", error);
       toast({
-        title: "Compression failed",
-        description: "An error occurred while compressing your images.",
+        title: "Nén thất bại",
+        description: "Đã xảy ra lỗi khi nén hình ảnh của bạn.",
         variant: "destructive",
       });
     } finally {
@@ -98,7 +95,6 @@ const Index = () => {
   };
   
   const handleQualityChange = () => {
-    // Allow compression again when quality changes
     setCanCompress(true);
   };
   
@@ -110,14 +106,14 @@ const Index = () => {
       downloadZip(zipBlob);
       
       toast({
-        title: "Download started",
-        description: "Your compressed images have been packaged into a ZIP file.",
+        title: "Bắt đầu tải xuống",
+        description: "Hình ảnh đã nén của bạn đã được đóng gói thành tệp ZIP.",
       });
     } catch (error) {
       console.error("Error creating ZIP file:", error);
       toast({
-        title: "Download failed",
-        description: "An error occurred while creating the ZIP file.",
+        title: "Tải xuống thất bại",
+        description: "Đã xảy ra lỗi khi tạo tệp ZIP.",
         variant: "destructive",
       });
     }
@@ -134,8 +130,8 @@ const Index = () => {
     setCanCompress(true);
     
     toast({
-      title: "Cleared",
-      description: "All images have been removed.",
+      title: "Đã xóa",
+      description: "Tất cả hình ảnh đã được xóa.",
     });
   };
 
@@ -143,19 +139,19 @@ const Index = () => {
     <div className="container mx-auto py-8 px-4">
       <header className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-          Quick Image Zip It
+          Công Cụ Nén Hình Ảnh
         </h1>
         <p className="text-muted-foreground mt-2">
-          Compress multiple images quickly with adjustable quality
+          Nén nhiều hình ảnh nhanh chóng với chất lượng có thể điều chỉnh
         </p>
       </header>
       
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Upload Images</CardTitle>
+            <CardTitle>Tải lên hình ảnh</CardTitle>
             <CardDescription>
-              Select images to compress or drag and drop them below
+              Chọn hình ảnh để nén hoặc kéo và thả chúng vào bên dưới
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -166,7 +162,7 @@ const Index = () => {
             
             {originalFiles.length > 0 && (
               <p className="text-sm mt-4">
-                {originalFiles.length} image{originalFiles.length > 1 ? 's' : ''} selected
+                Đã chọn {originalFiles.length} hình ảnh
               </p>
             )}
           </CardContent>
@@ -174,9 +170,9 @@ const Index = () => {
         
         <Card>
           <CardHeader>
-            <CardTitle>Compression Controls</CardTitle>
+            <CardTitle>Điều khiển nén</CardTitle>
             <CardDescription>
-              Adjust settings and start compression
+              Điều chỉnh cài đặt và bắt đầu nén
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -186,7 +182,7 @@ const Index = () => {
               onDelete={handleDelete}
               hasImages={originalFiles.length > 0}
               isProcessing={isProcessing}
-              isComplete={compressedImages.length > 0 && !canCompress}
+              isComplete={compressedImages.length > 0}
               onQualityChange={handleQualityChange}
             />
             
@@ -207,9 +203,9 @@ const Index = () => {
         <Card className="mt-8">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Results</CardTitle>
+              <CardTitle>Kết quả</CardTitle>
               <CardDescription>
-                {compressedImages.length} compressed image{compressedImages.length > 1 ? 's' : ''}
+                {compressedImages.length} hình ảnh đã được nén
               </CardDescription>
             </div>
             
@@ -218,7 +214,7 @@ const Index = () => {
               className="flex items-center text-sm text-primary hover:underline"
             >
               <Download className="h-4 w-4 mr-1" />
-              Download All
+              Tải xuống tất cả
             </button>
           </CardHeader>
           <CardContent>
