@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Play, Download, Trash2 } from 'lucide-react';
@@ -12,6 +12,7 @@ interface CompressionControlsProps {
   hasImages: boolean;
   isProcessing: boolean;
   isComplete: boolean;
+  onQualityChange?: (quality: number) => void;
 }
 
 const CompressionControls = ({
@@ -21,12 +22,17 @@ const CompressionControls = ({
   hasImages,
   isProcessing,
   isComplete,
+  onQualityChange,
 }: CompressionControlsProps) => {
   const [quality, setQuality] = useState(80);
   const { toast } = useToast();
 
   const handleQualityChange = (value: number[]) => {
-    setQuality(value[0]);
+    const newQuality = value[0];
+    setQuality(newQuality);
+    if (onQualityChange) {
+      onQualityChange(newQuality);
+    }
   };
 
   const handleCompress = () => {

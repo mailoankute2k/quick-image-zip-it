@@ -17,6 +17,7 @@ const Index = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [canCompress, setCanCompress] = useState(true);
   const { toast } = useToast();
   
   useEffect(() => {
@@ -43,6 +44,7 @@ const Index = () => {
   
   const handleImagesSelected = (files: File[]) => {
     setOriginalFiles((prevFiles) => [...prevFiles, ...files]);
+    setCanCompress(true); // Ensure we can compress when new images are added
     toast({
       title: "Images added",
       description: `${files.length} image${files.length > 1 ? 's' : ''} added successfully.`,
@@ -75,6 +77,8 @@ const Index = () => {
       }
       
       setCompressedImages(compressedResults);
+      setCanCompress(false); // Set to false after completion
+      
       toast({
         title: "Compression complete",
         description: `Successfully compressed ${totalImages} image${totalImages > 1 ? 's' : ''}.`,
@@ -91,6 +95,11 @@ const Index = () => {
       setStartTime(null);
       setRemainingTime(null);
     }
+  };
+  
+  const handleQualityChange = () => {
+    // Allow compression again when quality changes
+    setCanCompress(true);
   };
   
   const handleDownload = async () => {
@@ -122,6 +131,7 @@ const Index = () => {
     setOriginalFiles([]);
     setCompressedImages([]);
     setProgress(0);
+    setCanCompress(true);
     
     toast({
       title: "Cleared",
@@ -176,7 +186,8 @@ const Index = () => {
               onDelete={handleDelete}
               hasImages={originalFiles.length > 0}
               isProcessing={isProcessing}
-              isComplete={compressedImages.length > 0}
+              isComplete={compressedImages.length > 0 && !canCompress}
+              onQualityChange={handleQualityChange}
             />
             
             {isProcessing && (

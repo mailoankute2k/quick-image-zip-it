@@ -2,6 +2,14 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 
 export interface CompressedImageData {
   id: string;
@@ -33,10 +41,10 @@ const ImageGrid = ({ images }: ImageGridProps) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <h3 className="text-lg font-semibold">Compressed Images</h3>
       
-      <div className="image-grid">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-4">
         {images.map((image, index) => (
           <Dialog key={image.id}>
             <DialogTrigger asChild>
@@ -50,8 +58,9 @@ const ImageGrid = ({ images }: ImageGridProps) => {
                     alt={`Compressed ${image.originalFile.name}`}
                     className="object-cover w-full h-full"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 truncate">
-                    {calculateSavings(image.originalSize, image.compressedSize)} saved
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1">
+                    <div className="truncate">{calculateSavings(image.originalSize, image.compressedSize)} saved</div>
+                    <div className="truncate text-[10px]">{formatFileSize(image.originalSize)} → {formatFileSize(image.compressedSize)}</div>
                   </div>
                 </div>
               </Card>
@@ -71,27 +80,33 @@ const ImageGrid = ({ images }: ImageGridProps) => {
                 </div>
                 
                 <div className="space-y-4">
-                  <div>
-                    <h4 className="text-sm font-medium">Original Size</h4>
-                    <p>{formatFileSize(image.originalSize)}</p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium">Compressed Size</h4>
-                    <p>{formatFileSize(image.compressedSize)}</p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium">Space Saved</h4>
-                    <p>
-                      {formatFileSize(image.originalSize - image.compressedSize)} ({calculateSavings(image.originalSize, image.compressedSize)})
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-medium">File Type</h4>
-                    <p>{image.originalFile.type}</p>
-                  </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead colSpan={2} className="text-center">Compression Report</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell className="font-medium">Original Size</TableCell>
+                        <TableCell>{formatFileSize(image.originalSize)}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Compressed Size</TableCell>
+                        <TableCell>{formatFileSize(image.compressedSize)}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">Space Saved</TableCell>
+                        <TableCell>
+                          {formatFileSize(image.originalSize - image.compressedSize)} ({calculateSavings(image.originalSize, image.compressedSize)})
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell className="font-medium">File Type</TableCell>
+                        <TableCell>{image.originalFile.type}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
             </DialogContent>
