@@ -77,6 +77,16 @@
   }
 }
 
+/* Custom card heights for the image compression tool */
+.compression-card {
+  max-height: 380px;
+}
+
+.compression-card .card-content {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 /* Responsive grid columns for different screen sizes */
 .grid-cols-10 {
   grid-template-columns: repeat(10, minmax(0, 1fr));
@@ -117,4 +127,3 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-

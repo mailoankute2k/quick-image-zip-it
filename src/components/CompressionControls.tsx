@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { Play, Download, Trash2 } from 'lucide-react';
+import { Play, Download, Trash2, Percent } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 interface CompressionControlsProps {
@@ -47,8 +47,15 @@ const CompressionControls = ({
     onCompress(quality);
   };
 
+  const handleQuickQuality = (value: number) => {
+    setQuality(value);
+    if (onQualityChange) {
+      onQualityChange(value);
+    }
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium">Tỉ lệ nén</label>
@@ -63,6 +70,35 @@ const CompressionControls = ({
           className="py-2"
           disabled={isProcessing}
         />
+        <div className="flex gap-2 mt-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => handleQuickQuality(80)}
+            disabled={isProcessing}
+            className="flex-1"
+          >
+            <Percent className="h-3 w-3 mr-1" /> 80%
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => handleQuickQuality(50)}
+            disabled={isProcessing}
+            className="flex-1"
+          >
+            <Percent className="h-3 w-3 mr-1" /> 50%
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => handleQuickQuality(30)}
+            disabled={isProcessing}
+            className="flex-1"
+          >
+            <Percent className="h-3 w-3 mr-1" /> 30%
+          </Button>
+        </div>
         <p className="text-xs text-muted-foreground">
           Giá trị cao hơn giữ lại nhiều chất lượng nhưng kích thước tệp sẽ lớn hơn
         </p>

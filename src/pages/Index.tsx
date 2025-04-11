@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import ImageUploader from "@/components/ImageUploader";
@@ -147,14 +148,14 @@ const Index = () => {
       </header>
       
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
+        <Card className="compression-card">
+          <CardHeader className="pb-2">
             <CardTitle>Tải lên hình ảnh</CardTitle>
             <CardDescription>
               Chọn hình ảnh để nén hoặc kéo và thả chúng vào bên dưới
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="card-content">
             <ImageUploader 
               onImagesSelected={handleImagesSelected}
               isProcessing={isProcessing}
@@ -168,14 +169,14 @@ const Index = () => {
           </CardContent>
         </Card>
         
-        <Card>
-          <CardHeader>
+        <Card className="compression-card">
+          <CardHeader className="pb-2">
             <CardTitle>Điều khiển nén</CardTitle>
             <CardDescription>
               Điều chỉnh cài đặt và bắt đầu nén
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="card-content">
             <CompressionControls
               onCompress={handleCompressionStart}
               onDownload={handleDownload}
@@ -187,7 +188,7 @@ const Index = () => {
             />
             
             {isProcessing && (
-              <div className="mt-6">
+              <div className="mt-4">
                 <ProgressIndicator
                   currentProgress={progress}
                   isProcessing={isProcessing}
